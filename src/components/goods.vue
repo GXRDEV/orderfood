@@ -12,9 +12,9 @@
 			</scroller>
 			<scroller class="foods" lockX height="100%" ref="freshs" @on-scroll="onScroll">	
 				<div>
-					<div v-for="(item,index) in menu" class="foods-item food-list-hook" ref="fresha">
+					<div v-for="item in menu" class="foods-item food-list-hook" ref="fresha">
 						<h1>{{item.name}}</h1>
-						<dl v-for="items in item.foods">
+						<dl v-for="items in item.foods" @click="selectedFood(items)">
 							<dt>
 								<img :src="items.icon"/>
 							</dt>
@@ -29,7 +29,8 @@
 				</div>
 			</scroller>
 		</div>
-		<shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
+		<shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice" :select-foods="selectFoods"></shopcart>
+		<food :selectFood="selectFood"></food>
 	</div>
 	
 </template>
@@ -38,6 +39,7 @@
 import { Scroller } from 'vux'
 import shopcart from "./shopcart"
 import carcon from "./carcon"
+import food from "./food"
 export default {
 	props:{
 	  	seller:{
@@ -47,14 +49,16 @@ export default {
 	components:{
 		Scroller,
 		shopcart,
-		carcon
+		carcon,
+		food
 	},
   name: 'goods',
   data () {
     return {
-    	menu:{},
+    	menu:[],
     	listHeight:[],
-    	scrollY:0
+    	scrollY:0,
+    	selectFood:{}
     }
   },
   created(){
@@ -87,6 +91,17 @@ export default {
 	  		}
 	  	}
   		return 0
+  	},
+  	selectFoods(){
+  		let foods=[];
+		this.menu.forEach((menus)=>{
+			menus.foods.forEach((food)=>{
+				if(food.count){
+					foods.push(food)
+				}
+			})
+		})
+  		return foods
   	}
   },
   methods:{
@@ -95,7 +110,7 @@ export default {
 //  console.log(this.scrollY)
 
    },
-   
+   /*  将每一块高度push进数组中  */
 	_caculateHeight(){
 		let foodList=this.$refs.fresha;
 		let height=0;
@@ -111,6 +126,11 @@ export default {
   	scrollMenu(index){
 		console.log(this.listHeight[index])
 //		console.log(this.$refs.freshs)
+  	},
+  	
+  	/*  点击显示详情  */
+  	selectedFood(obj){
+  		this.selectfood=obj
   	}
   }
 }

@@ -1,6 +1,6 @@
 <template>
 	<div class="carcon">
-		<span class="sub" v-show="food.count>0">-</span>
+		<span class="sub" v-show="food.count>0" @click="subCount">-</span>
 		<span class="count" v-show="food.count>0">{{food.count}}</span>
 		<span class="add" @click="addCount">+</span>
 	</div>
@@ -23,6 +23,9 @@
 				}else{
 					this.food.count++
 				}
+			},
+			subCount(){
+				this.food.count--
 			}
 		}
 	}
@@ -57,7 +60,7 @@
 			border-radius: 50%;
 			width: .4rem;
 			height: .4rem;
-			font: .24rem;
+			font-size: .3rem;
 			text-align: center;
 			line-height: .45rem;
 			color: #fff;
