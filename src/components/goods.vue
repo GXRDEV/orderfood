@@ -30,7 +30,7 @@
 			</scroller>
 		</div>
 		<shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice" :select-foods="selectFoods"></shopcart>
-		<food :selectFood="selectFood"></food>
+		<food :selectFood="selectFood" ref="food"></food>
 	</div>
 	
 </template>
@@ -75,6 +75,7 @@ export default {
   			this.$refs.freshs.reset()
   			this._caculateHeight()
   		})
+
   	},function(err){
   		console.log(err)
   	})
@@ -130,7 +131,9 @@ export default {
   	
   	/*  点击显示详情  */
   	selectedFood(obj){
-  		this.selectfood=obj
+  		this.selectFood=obj
+  		this.$refs.food.show()
+  		
   	}
   }
 }

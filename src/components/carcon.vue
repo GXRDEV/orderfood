@@ -1,8 +1,8 @@
 <template>
 	<div class="carcon">
-		<span class="sub" v-show="food.count>0" @click="subCount">-</span>
+		<span class="sub" v-show="food.count>0" @click.stop="subCount">-</span>
 		<span class="count" v-show="food.count>0">{{food.count}}</span>
-		<span class="add" @click="addCount">+</span>
+		<span class="add" @click.stop="addCount">+</span>
 	</div>
 	
 </template>
